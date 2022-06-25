@@ -3,6 +3,6 @@
 
 bool_t resource_exists(const char *filename);
 void *resource_get(const char *filename);
-long resource_size(const char *filename);
+size_t resource_size(const char *filename);
 
 #endif

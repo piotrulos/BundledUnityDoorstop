@@ -61,7 +61,7 @@ void *resource_get(const char *filename){
     return lpAddress;
 }
 
-unsigned long resource_size(const char *filename){
+size_t resource_size(const char *filename){
     if(!hInstance){
         LOG("Failed to get module\n");
         return 0;
@@ -69,7 +69,7 @@ unsigned long resource_size(const char *filename){
     resource_info *info = get_resource_info(filename);
     if(!info){
         LOG("Failed to find resource info\n");
-        return NULL;
+        return 0;
     }
     HRSRC hResource = FindResource(hInstance, MAKEINTRESOURCE(info->id), RT_RCDATA);
     if(!hResource){
