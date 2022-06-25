@@ -7,6 +7,7 @@
 #include "util/logging.h"
 #include "util/paths.h"
 #include "util/util.h"
+#include "util/resource.h"
 
 void mono_doorstop_bootstrap(void *mono_domain) {
     if (getenv(TEXT("DOORSTOP_INITIALIZED"))) {
