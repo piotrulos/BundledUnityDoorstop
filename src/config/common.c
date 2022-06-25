@@ -10,11 +10,13 @@ void cleanup_config() {
         val = NULL;                                                            \
     }
 
+#ifndef BUNDLE
     FREE_NON_NULL(config.target_assembly);
     FREE_NON_NULL(config.mono_dll_search_path_override);
     FREE_NON_NULL(config.clr_corlib_dir);
     FREE_NON_NULL(config.clr_runtime_coreclr_path);
     FREE_NON_NULL(config.mono_debug_address);
+#endif
 
 #undef FREE_NON_NULL
 }
