@@ -195,7 +195,11 @@ BOOL WINAPI DllEntry(HINSTANCE hInstDll, DWORD reasonForDllLoad,
 
     redirect_output_log(paths);
 
+#ifndef BUNDLE
     if (!file_exists(config.target_assembly)) {
+#else
+    if (!resource_exists(config.target_assembly)) {
+#endif
         LOG("Could not find target assembly!");
         config.enabled = FALSE;
     }

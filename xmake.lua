@@ -8,11 +8,16 @@ option("include_logging")
     set_description("Include verbose logging on run")
     add_defines("VERBOSE")
 
+option("include_resource")
+    set_showmenu(true)
+    set_description("Use bundled resources at runtime")
+    add_defines("BUNDLE")
 
-target("doorstop")
+target("winhttp")
     set_kind("shared")
     set_optimize("smallest")
     add_options("include_logging")
+    add_options("include_resource")
     local load_events = {}
 
     if is_os("windows") then
@@ -20,7 +25,7 @@ target("doorstop")
         add_proxydef(load_events)
 
         includes("src/windows/build_tools/rcgen.lua")
-        add_rc(load_events, info)
+        add_rc(load_events, info, has_config("include_resource"))
 
         add_files("src/windows/*.c")
         add_defines("UNICODE")
@@ -28,6 +33,9 @@ target("doorstop")
     end
 
     if is_os("linux") or is_os("macosx") then
+        includes("src/nix/build_tools/resourcegen.lua")
+        add_resource(has_config("include_resource"))
+
         add_files("src/nix/*.c")
         add_files("src/nix/plthook/*.c")
         add_links("dl")

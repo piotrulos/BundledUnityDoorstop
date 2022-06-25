@@ -61,6 +61,7 @@ Available build options:
 * `-with_logging`: build with logging enabled
 * `-arch`: the architectures to build for, separated by commas (e.g. `-arch x86,x64`)
 * `-debug`: build in debug mode (currently only for *nix)
+* `-bundle`: Bundle resources with doorstop.
 
 > **Note:** Initial build times are usually slower because the build script automatically downloads and installs xmake.  
 > On Unix, xmake is built directly from the source code.

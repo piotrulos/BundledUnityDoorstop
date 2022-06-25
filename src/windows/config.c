@@ -180,7 +180,9 @@ static inline void init_env_vars() {
 
 void load_config() {
     init_config_defaults();
+#ifndef BUNDLE
     init_config_file();
     init_cmd_args();
     init_env_vars();
+#endif
 }

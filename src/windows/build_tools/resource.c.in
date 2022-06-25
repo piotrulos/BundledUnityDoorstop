@@ -1,0 +1,80 @@
+/* ==================================
+ * COMPUTER GENERATED -- DO NOT EDIT
+ * ==================================
+ */
+#include <windows.h>
+#include <winnt.h>
+#include "../src/crt.h"
+
+#include "../src/util/resource.h"
+#include "../src/util/logging.h"
+
+typedef struct{
+    unsigned int id;
+    char *filename;
+} resource_info;
+
+EXTERN_C IMAGE_DOS_HEADER __ImageBase;
+static HINSTANCE hInstance = (HINSTANCE)&__ImageBase;
+
+
+static const resource_info resource_mapping[] = {
+    ${RESOURCE_MAPPING}
+    {0, NULL}
+};
+
+static resource_info *get_resource_info(const char *filename){
+    for(int i = 0; resource_mapping[i].filename; i++){
+        if(!strcmpi(filename, resource_mapping[i].filename))
+            return &resource_mapping[i];
+    }
+    return NULL;
+}
+
+bool_t resource_exists(const char *filename){
+    return get_resource_info(filename) != NULL;
+}
+
+
+void *resource_get(const char *filename){
+    if(!hInstance){
+        LOG("Failed to get module\n");
+        return NULL;
+    }
+    resource_info *info = get_resource_info(filename);
+    if(!info){
+        LOG("Failed to find resource info\n");
+        return NULL;
+    }
+    HRSRC hResource = FindResource(hInstance, MAKEINTRESOURCE(info->id), RT_RCDATA);
+    if(!hResource){
+        LOG("Failed to find resource\n");
+        return NULL;
+    }
+    HGLOBAL hMemory = LoadResource(hInstance, hResource);
+    if(!hMemory){
+        LOG("Failed to load resource\n");
+        return NULL;
+    }
+    LPVOID lpAddress = LockResource(hMemory);
+
+    return lpAddress;
+}
+
+unsigned long resource_size(const char *filename){
+    if(!hInstance){
+        LOG("Failed to get module\n");
+        return 0;
+    }
+    resource_info *info = get_resource_info(filename);
+    if(!info){
+        LOG("Failed to find resource info\n");
+        return NULL;
+    }
+    HRSRC hResource = FindResource(hInstance, MAKEINTRESOURCE(info->id), RT_RCDATA);
+    if(!hResource){
+        LOG("Failed to find resource\n");
+        return 0;
+    }
+    return SizeofResource(hInstance, hResource);
+}

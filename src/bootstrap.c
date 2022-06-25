@@ -55,6 +55,7 @@ void mono_doorstop_bootstrap(void *mono_domain) {
     free(norm_assembly_dir);
 
     LOG("Opening assembly: %s", config.target_assembly);
+#ifndef BUNDLE
     void *file = fopen(config.target_assembly, "r");
     if (!file) {
         LOG("Failed to open assembly: %s", config.target_assembly);
@@ -65,6 +66,14 @@ void mono_doorstop_bootstrap(void *mono_domain) {
     void *data = malloc(size);
     fread(data, size, 1, file);
     fclose(file);
+#else
+    void *data = resource_get(config.target_assembly);
+    size_t size = resource_size(config.target_assembly);
+    if (!data) {
+        LOG("Failed to open assembly: %s", config.target_assembly);
+        return;
+    }
+#endif
 
     LOG("Opened Assembly DLL (%d bytes); opening its main image", size);
 
@@ -72,7 +81,9 @@ void mono_doorstop_bootstrap(void *mono_domain) {
     MonoImageOpenStatus s = MONO_IMAGE_OK;
     void *image = mono.image_open_from_data_with_name(data, size, TRUE, &s,
                                                       FALSE, dll_path);
+#ifndef BUNDLE
     free(data);
+#endif
     if (s != MONO_IMAGE_OK) {
         LOG("Failed to load assembly image: %s. Got result: %d\n",
             config.target_assembly, s);
@@ -91,12 +102,12 @@ void mono_doorstop_bootstrap(void *mono_domain) {
         return;
     }
 
-    LOG("Assembly loaded; looking for Doorstop.Entrypoint:Start");
-    void *desc = mono.method_desc_new("Doorstop.Entrypoint:Start", TRUE);
+    LOG("Assembly loaded; looking for Entrypoint.Entrypoint:Start");
+    void *desc = mono.method_desc_new("Entrypoint.Entrypoint:Start", TRUE);
     void *method = mono.method_desc_search_in_image(desc, image);
     mono.method_desc_free(desc);
     if (!method) {
-        LOG("Failed to find method Doorstop.Entrypoint:Start");
+        LOG("Failed to find method Entrypoint.Entrypoint:Start");
         return;
     }
 

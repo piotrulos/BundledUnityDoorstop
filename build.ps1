@@ -4,6 +4,8 @@ param (
     [ValidateSet("x86", "x64")]
     [string[]]
     $Arch = @("x86", "x64"),
+    [Parameter(Mandatory = $false)]
+    [switch] $bundle = $false,
     [Parameter(Position = 0, Mandatory = $false, ValueFromRemainingArguments = $true)]
     [string[]]
     $ScriptArgs
@@ -55,6 +57,10 @@ if (!(Test-Path $XMAKE_DIR)) {
 $XMAKE_EXE = Join-Path $XMAKE_DIR "xmake.exe"
 foreach ($a in $Arch) {
     $verbose_opt = if ($with_logging) { "--include_logging=y" } else { "--include_logging=n" }
+    $verbose_opt += if ($bundle) {" --include_resource=y"} else { " --include_resource=n" }
+
+    echo "$XMAKE_EXE f -a $a $verbose_opt"
+
     Invoke-Expression "& $XMAKE_EXE f -a $a $verbose_opt"
     Invoke-Expression "& $XMAKE_EXE $($ScriptArgs -join " ")"
 }

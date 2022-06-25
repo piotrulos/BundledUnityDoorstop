@@ -1,0 +1,50 @@
+#include "../util/resource.h"
+
+#define INCBIN_PREFIX g_
+#include "incbin/incbin.h"
+
+typedef struct{
+    char *filename;
+    unsigned long size;
+    void *data;
+} resource_info;
+
+${INCBIN}
+
+static const *resource_mapping[] = {
+    ${RESOURCE_MAPPING}
+    {NULL, 0, NULL}
+};
+
+static resource_info *get_resource_info(const char *filename){
+    for(int i = 0; resource_mapping[i].filename; i++){
+        if(!strcmpi(filename, resource_mapping[i].filename))
+            return &resource_mapping[i];
+    }
+    return NULL;
+}
+
+bool_t resource_exists(const char *filename){
+    return get_resource_info(filename) != NULL;
+}
+
+
+void *resource_get(const char *filename){
+    resource_info *info = get_resource_info(filename);
+    if(!info){
+        LOG("Failed to find resource info\n");
+        return NULL;
+    }
+
+    return info->data;
+}
+
+unsigned long resource_size(const char *filename){
+    resource_info *info = get_resource_info(filename);
+    if(!info){
+        LOG("Failed to find resource info\n");
+        return NULL;
+    }
+
+    return info->size;
+}
