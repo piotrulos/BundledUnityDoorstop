@@ -3,6 +3,7 @@
  * ==================================
  */
 #include "../src/util/resource.h"
+#include "../src/util/logging.h"
 
 #define INCBIN_PREFIX
 #define INCBIN_STYLE INCBIN_STYLE_SNAKE
