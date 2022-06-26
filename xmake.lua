@@ -13,7 +13,7 @@ option("include_resource")
     set_description("Use bundled resources at runtime")
     add_defines("BUNDLE")
 
-target("winhttp")
+target("doorstop")
     set_kind("shared")
     set_optimize("smallest")
     add_options("include_logging")
@@ -34,7 +34,7 @@ target("winhttp")
 
     if is_os("linux") or is_os("macosx") then
         includes("src/nix/build_tools/resourcegen.lua")
-        add_resource(has_config("include_resource"))
+        add_resource(load_events, has_config("include_resource"))
 
         add_files("src/nix/*.c")
         add_files("src/nix/plthook/*.c")

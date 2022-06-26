@@ -1,4 +1,4 @@
-function add_resource(include_resource)
+function add_resource(load_events, include_resource)
    table.insert(load_events, function(target, import, io)
       import("util", {rootdir="src/nix/build_tools"})
       

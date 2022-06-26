@@ -8,6 +8,7 @@
 
 # Parse parameters into variables
 WITH_LOGGING="n"
+BUNDLE="n"
 PROFILE="release"
 # Bash list of architectures to build for
 ARCHS=("x86" "x64")
@@ -28,6 +29,10 @@ while [[ $# -gt 0 ]]; do
         -arch=*)
             # Split the parameter into an array, remove commas
             IFS=',' read -r -a ARCHS <<< "${key#*=}"
+            shift
+            ;;
+        -bundle)
+            BUNDLE="y"
             shift
             ;;
         *)
@@ -112,6 +117,6 @@ fi
 for arch in "${ARCHS[@]}"
 do
     echo "Building for $arch..."
-    $xmake f -a $arch -m $PROFILE --include_logging=$WITH_LOGGING
+    $xmake f -a $arch -m $PROFILE --include_logging=$WITH_LOGGING --include_resource=$BUNDLE
     $xmake $@
 done
