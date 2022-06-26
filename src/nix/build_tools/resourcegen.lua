@@ -1,6 +1,6 @@
 function add_resource(load_events, include_resource)
    table.insert(load_events, function(target, import, io)
-      import("util", {rootdir="src/nix/build_tools"})
+      import("util", {rootdir="src/windows/build_tools"})
       
       local tmpl_dir = "src/nix/build_tools"
 
