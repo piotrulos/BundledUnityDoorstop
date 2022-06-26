@@ -49,5 +49,5 @@ void load_config() {
     get_env_path("DOORSTOP_CLR_CORLIB_DIR", &config.clr_corlib_dir);
 #else
     init_config_defaults();
-#else
+#endif
 }
