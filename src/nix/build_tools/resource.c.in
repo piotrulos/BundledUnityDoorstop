@@ -31,7 +31,7 @@ static resource_init(){
 static resource_info *get_resource_info(const char *filename){
     resource_init();
     for(int i = 0; resource_mapping[i].filename; i++){
-        if(!strcmpi(filename, resource_mapping[i].filename))
+        if(!strcmp(filename, resource_mapping[i].filename))
             return &resource_mapping[i];
     }
     return NULL;
