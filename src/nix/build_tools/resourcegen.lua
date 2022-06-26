@@ -35,6 +35,7 @@ function add_resource(load_events, include_resource)
             path.join(tmpl_dir, "resource.c.in"),
             path.join("build", "resource.c"),
             {
+               INCBIN_DEF = resource_incbin,
                RESOURCE_MAPPING = resource_mapping,
             }
          )

@@ -1,3 +1,4 @@
+#include "../src/crt.h"
 #include "../src/util/resource.h"
 
 #define INCBIN_PREFIX g_
@@ -9,7 +10,7 @@ typedef struct{
     void *data;
 } resource_info;
 
-${INCBIN}
+${INCBIN_DEF}
 
 static const *resource_mapping[] = {
     ${RESOURCE_MAPPING}
