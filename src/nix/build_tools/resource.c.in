@@ -1,7 +1,7 @@
-#include "../util/resource.h"
+#include "../src/util/resource.h"
 
 #define INCBIN_PREFIX g_
-#include "incbin/incbin.h"
+#include "../src/nix/incbin/incbin.h"
 
 typedef struct{
     char *filename;
