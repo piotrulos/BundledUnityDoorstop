@@ -1,7 +1,15 @@
-#include "../util/resource.h"
+/* ==================================
+ * COMPUTER GENERATED -- DO NOT EDIT
+ * ==================================
+ */
+#include "../src/util/resource.h"
+#include "../src/util/logging.h"
 
-#define INCBIN_PREFIX g_
-#include "incbin/incbin.h"
+#define INCBIN_PREFIX
+#define INCBIN_STYLE INCBIN_STYLE_SNAKE
+#include "../src/nix/incbin/incbin.h"
+
+${INCBIN_DEF}
 
 typedef struct{
     char *filename;
@@ -9,16 +17,22 @@ typedef struct{
     void *data;
 } resource_info;
 
-${INCBIN}
+static resource_info *resource_mapping;
 
-static const *resource_mapping[] = {
-    ${RESOURCE_MAPPING}
-    {NULL, 0, NULL}
-};
+static resource_init(){
+    if(!resource_mapping){
+        resource_info mapping[] = {
+            ${RESOURCE_MAPPING}
+            {NULL, 0, NULL}
+        };
+        resource_mapping = mapping;
+    }
+}
 
 static resource_info *get_resource_info(const char *filename){
+    resource_init();
     for(int i = 0; resource_mapping[i].filename; i++){
-        if(!strcmpi(filename, resource_mapping[i].filename))
+        if(!strcmp(filename, resource_mapping[i].filename))
             return &resource_mapping[i];
     }
     return NULL;

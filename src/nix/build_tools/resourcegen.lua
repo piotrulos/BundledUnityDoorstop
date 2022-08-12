@@ -25,7 +25,7 @@ function add_resource(load_events, include_resource)
 
                resource_mapping = 
                   resource_mapping .. 
-                  format("{\"%s\", INCBIN_PREFIX ## %sSize, INCBIN_PREFIX ## %sData},\n", 
+                  format("{\"%s\", %s_size, %s_data},\n", 
                      filename, resource_name, resource_name)
                print("Resouce included:", resource_name, filename)
             end
@@ -35,6 +35,7 @@ function add_resource(load_events, include_resource)
             path.join(tmpl_dir, "resource.c.in"),
             path.join("build", "resource.c"),
             {
+               INCBIN_DEF = resource_incbin,
                RESOURCE_MAPPING = resource_mapping,
             }
          )
@@ -42,4 +43,5 @@ function add_resource(load_events, include_resource)
    end)
    
    if include_resource then add_files("build/resource.c") end
+   add_files("src/nix/incbin/*.c")
 end

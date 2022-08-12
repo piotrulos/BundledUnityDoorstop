@@ -30,8 +30,6 @@ void get_env_path(const char_t *name, char_t **target) {
 
 void load_config() {
 #ifndef BUNDLE
-    init_cmd_args();
-    init_env_vars();
     get_env_bool("DOORSTOP_ENABLED", &config.enabled);
     get_env_bool("DOORSTOP_REDIRECT_OUTPUT_LOG", &config.redirect_output_log);
     get_env_bool("DOORSTOP_IGNORE_DISABLED_ENV", &config.ignore_disabled_env);
@@ -47,5 +45,5 @@ void load_config() {
     get_env_path("DOORSTOP_CLR_CORLIB_DIR", &config.clr_corlib_dir);
 #else
     init_config_defaults();
-#else
+#endif
 }
