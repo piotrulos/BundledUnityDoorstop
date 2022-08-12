@@ -103,7 +103,7 @@ Doorstop sets some environment variables useful for code execution:
 | `DOORSTOP_PROCESS_PATH`       | Path to the application executable where the injected assembly is run.                                                           |
 | `DOORSTOP_MANAGED_FOLDER_DIR` | *UnityMono*: Path to the game's `Managed` folder. *Il2Cpp*: Path to CoreCLR's base class library folder.                         |
 | `DOORSTOP_DLL_SEARCH_DIRS`    | Paths where the runtime searchs assemblies from by default, separated by OS-specific separator (`;` on windows and `:` on *nix). |
-| `DOORSTOP_RUNTIME_LIB_PATH`   | *Only on UnityMono*: Full path to the mono runtime library.                                                                      |
+| `DOORSTOP_MONO_LIB_PATH`      | *Only on UnityMono*: Full path to the mono runtime library.                                                                      |
 
 ### Debugging
 
@@ -158,7 +158,6 @@ All Doorstop arguments start with `--doorstop-` and always contain an argument. 
 | `--doorstop-target-assembly string`               | Path to the assembly to load and execute.                                                            |
 | `--doorstop-mono-dll-search-path-override string` | Overrides default Mono DLL search path                                                               |
 | `--doorstop-mono-debug-enabled bool`              | If true, Mono debugger server will be enabled                                                        |
-| `--doorstop-mono-debug-start-server bool`         | Whether Doorstop should initialize the debugger server automatically                                 |
 | `--doorstop-mono-debug-suspend bool`              | Whether to suspend the game execution until the debugger is attached.                                |
 | `--doorstop-mono-debug-address string`            | The address to use for the Mono debugger server.                                                     |
 | `--doorstop-clr-corlib-dir string`                | Path to coreclr library that contains the CoreCLR runtime                                            |
