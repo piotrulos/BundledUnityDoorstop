@@ -1,4 +1,4 @@
-# Breaking changes from UnityDoorstop 3.x
+# Breaking changes from UnityDoorstop 3.x 
 
 This version of Doorstop is almost a complete rewrite of previous versions.
 Because of this, some breaking changes were introduced to streamline the syntax and behaviour.
